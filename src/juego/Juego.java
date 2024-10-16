@@ -12,12 +12,16 @@ public class Juego extends InterfaceJuego {
 	// Variables y métodos propios de cada grupo
 	private Pelota pelota;
 
+	private Barra barra;
+
 	public Juego() {
 		// Inicializa el objeto entorno
 		this.entorno = new Entorno(this, "Titulo de TP - Grupo N - Apellido1 - Apellido2 -Apellido3", 800, 600);
 
 		// Inicializar lo que haga falta para el juego
 		pelota = new Pelota(entorno.ancho() / 2, entorno.alto() / 2);
+
+		barra = new Barra(entorno.ancho() / 2, entorno.alto() - 20);
 
 		// Inicia el juego!
 		this.entorno.iniciar();
@@ -32,6 +36,8 @@ public class Juego extends InterfaceJuego {
 	public void tick() {
 		// Procesamiento de un instante de tiempo
 		pelota.dibujar(entorno);
+		barra.dibujar(entorno);
+
 		pelota.mover();
 
 		if (pelota.chocoConBorde(entorno)) {
@@ -42,6 +48,14 @@ public class Juego extends InterfaceJuego {
 			entorno.colorFondo(Color.BLUE);
 		} else {
 			entorno.colorFondo(Color.BLACK);
+		}
+
+		// barra
+		if (entorno.estaPresionada(entorno.TECLA_IZQUIERDA)) {
+			barra.moverIzquierda();
+		}
+		if (entorno.estaPresionada(entorno.TECLA_DERECHA)) {
+			barra.moverDerecha();
 		}
 
 	}
